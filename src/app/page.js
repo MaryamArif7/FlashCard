@@ -23,7 +23,7 @@ export default function Home() {
           Master Any Subject With AI
         </motion.h1>
         <p className="text-white text-2xl mt-5 text-center">
-          Here to make studying fun with the power of AI to <br />{" "}
+          Here to make studying fun with the power of AI to <br />
             master anysubject with minimal effort
         </p>
         <div className="flex justify-center items-center">
