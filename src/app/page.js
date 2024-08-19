@@ -23,9 +23,8 @@ export default function Home() {
           Master Any Subject With AI
         </motion.h1>
         <p className="text-white text-2xl mt-5 text-center">
-          QuizWiz makes studying fun and Harness the power of AI to <br />{" "}
-          generate interactive flashcards that help you <br /> master any
-          subject with minimal effort
+          Here to make studying fun with the power of AI to <br />{" "}
+            master anysubject with minimal effort
         </p>
         <div className="flex justify-center items-center">
           <button className=" mt-5 bg-gradient-to-r from-purple-700 to to-blue-400 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
@@ -33,7 +32,8 @@ export default function Home() {
           </button>
         </div>
       </div>
-      <div className="ml-32 mr-32 mt-10">
+      <div className="ml-32 mr-32 mt-28">
+        <h1 className="text-4xl text-white text-center">Features</h1>
       <Features />
       </div>
       <div>

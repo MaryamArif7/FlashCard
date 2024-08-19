@@ -13,52 +13,31 @@ import {
 export function Features() {
   const features = [
     {
-      title: "Customized Gaming Flashcard",
-      description:
-        " Create personalized flashcards tailored to your learning style",
-      icon: <IconTerminal2 />,
-    },
-    {
-      title: "Leaderboard for Top 10 Users",
-      description:
-        " Compete with others and track your progress on a leaderboard showcasing the top 10 users.",
-      icon: <IconEaseInOut />,
-    },
-    {
       title: "Ease of use",
       description:
         "It's as easy as using an Apple, and as expensive as buying one.",
       icon: <IconEaseInOut />,
     },
-    {
-      title: "Quizzes Based on Flashcards",
-      description:
-        "Challenge yourself with quizzes that utilize your flashcards",
-      icon: <IconEaseInOut />,
-    },
+    
     {
       title: "Pricing like no other",
       description:
         "Our prices are best in the market. No cap, no lock, no credit card required.",
       icon: <IconCurrencyDollar />,
     },
-    {
-      title: "100% Uptime guarantee",
-      description: "We just cannot be taken down by anyone.",
-      icon: <IconCloud />,
-    },
+ 
     
     {
-      title: "24/7 Customer Support",
+      title: "Generate with the power of AI ",
       description:
         "We are available a 100% of the time. Atleast our AI Agents are.",
       icon: <IconHelp />,
     },
     {
-      title: "Money back guarantee",
+      title: "24/7 Customer Support",
       description:
-        "If you donot like EveryAI, we will convince you to like us.",
-      icon: <IconAdjustmentsBolt />,
+        "We are available a 100% of the time. Atleast our AI Agents are.",
+      icon: <IconHelp />,
     },
   
   ];
