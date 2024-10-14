@@ -1,5 +1,5 @@
 "use client";
-import { useUser } from "@clerk/nextjs";
+import { useUser } from "@clerk/nextjs"; 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { db } from "../../../firebase";
@@ -9,7 +9,6 @@ import { Textarea } from "@/components/ui/textarea";
 import {
   Dialog,
   DialogTitle,
-  Grid,
   CardContent,
   Typography,
   Box,
@@ -18,6 +17,13 @@ import {
   DialogContentText,
   TextField,
 } from "@mui/material";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 export default function Generate() {
   const { isLoaded, isSignedIn, user } = useUser();
@@ -37,15 +43,15 @@ export default function Generate() {
       const response = await fetch("/api/generate", {
         method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ text }),
       });
       const data = await response.json();
       setFlashcards(data);
     } catch (error) {
-      console.error('Error generating flashcards:', error);
-      alert('Failed to generate flashcards. Please try again.');
+      console.error("Error generating flashcards:", error);
+      alert("Failed to generate flashcards. Please try again.");
     }
   };
 
@@ -95,7 +101,7 @@ export default function Generate() {
 
       await batch.commit();
       handleClose();
-      router.push('/flashcards');
+      router.push("/flashcards");
     } catch (error) {
       console.error("Error saving flashcards:", error);
       alert("Failed to save flashcards");
@@ -103,10 +109,10 @@ export default function Generate() {
   };
 
   return (
-    <div className="bg-black min-h-screen">
+    <div className="bg-purple-400 min-h-screen">
       <div className="flex flex-col items-center">
-        <h1 className="mt-24 text-white text-2xl">Generate Flashcards</h1>
-        <div className="mt-10 grid w-96 gap-2">
+        <h1 className="mt-10 text-white text-2xl">Generate Flashcards</h1>
+        <div className="mt-4 grid w-96 gap-2">
           <Textarea
             placeholder="Enter Your Prompt here"
             value={text}
@@ -117,81 +123,96 @@ export default function Generate() {
       </div>
 
       {flashcards.length > 0 && (
-        <Box sx={{ mt: 4 }}>
-          <Typography variant="h5" className="text-white">Generated Flashcards</Typography>
-          <Grid container spacing={2}>
-            {flashcards.map((flashcard, index) => (
-              <Grid item xs={12} sm={6} md={4} key={index}>
-                <div
-                  onClick={() => handleCardClick(index)}
-                  style={{
-                    width: '100%',
-                    height: '200px',
-                    perspective: '1000px',
-                    borderRadius: '12px',
-                    transition: 'box-shadow 0.3s ease',
-                  }}
-                >
-                  <div
-                    style={{
-                      position: 'relative',
-                      width: '100%',
-                      height: '100%',
-                      transition: 'transform 0.6s',
-                      transformStyle: 'preserve-3d',
-                      transform: flipped[index] ? 'rotateY(180deg)' : 'rotateY(0deg)',
-                      borderRadius: '12px',
-                    }}
-                  >
+        <Box sx={{ mt: 1}}>
+          <Typography variant="h5" className="text-white">
+            Generated Flashcards
+          </Typography>
+          <div className="relative">
+            <Carousel>
+              <CarouselContent>
+                {flashcards.map((flashcard, index) => (
+                  <CarouselItem key={index}>
                     <div
+                      onClick={() => handleCardClick(index)}
                       style={{
-                        position: 'absolute',
-                        width: '100%',
-                        height: '100%',
-                        backfaceVisibility: 'hidden',
-                        backgroundColor: '#f0f0f0',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        padding: '16px',
-                        borderRadius: '12px',
+                        width: "200px",
+                        height: "300px",
+                        perspective: "1000px",
+                        margin: "0 auto",
                       }}
                     >
-                      <CardContent>
-                        <Typography variant="body1">{flashcard.front}</Typography>
-                      </CardContent>
+                      <div
+                        style={{
+                          position: "relative",
+                          width: "100%",
+                          height: "100%",
+                          transition: "transform 0.6s",
+                          transformStyle: "preserve-3d",
+                          transform: flipped[index]
+                            ? "rotateY(180deg)"
+                            : "rotateY(0deg)",
+                        }}
+                      >
+                        {/* Front Side */}
+                        <div
+                          style={{
+                            position: "absolute",
+                            width: "100%",
+                            height: "100%",
+                            backfaceVisibility: "hidden",
+                            backgroundColor: "#f0f0f0",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            padding: "16px",
+                          }}
+                        >
+                          <CardContent>
+                            <Typography variant="body1">
+                              {flashcard.front}
+                            </Typography>
+                          </CardContent>
+                        </div>
+
+                  
+                        <div
+                          style={{
+                            position: "absolute",
+                            width: "100%",
+                            height: "100%",
+                            backfaceVisibility: "hidden",
+                            backgroundColor: "#f0f0f0",
+                            transform: "rotateY(180deg)",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            padding: "16px",
+                          }}
+                        >
+                          <CardContent>
+                            <Typography variant="body1">
+                              {flashcard.back}
+                            </Typography>
+                          </CardContent>
+                        </div>
+                      </div>
                     </div>
-                    <div
-                      style={{
-                        position: 'absolute',
-                        width: '100%',
-                        height: '100%',
-                        backfaceVisibility: 'hidden',
-                        backgroundColor: '#f0f0f0',
-                        transform: 'rotateY(180deg)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        padding: '16px',
-                        borderRadius: '12px',
-                      }}
-                    >
-                      <CardContent>
-                        <Typography variant="body1">{flashcard.back}</Typography>
-                      </CardContent>
-                    </div>
-                  </div>
-                </div>
-              </Grid>
-            ))}
-          </Grid>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious>Previous</CarouselPrevious>
+              <CarouselNext>Next</CarouselNext>
+            </Carousel>
+          </div>
         </Box>
       )}
-      <Box sx={{ mt: 4, display: "flex", justifyContent: "center" }}>
-        <Button variant="contained" color="secondary" onClick={handleOpen}>
-          Save
+
+      <Box sx={{ mt: 2, display: "flex", justifyContent: "center" }}>
+        <Button  onClick={handleOpen}>
+          Save  Your Flashcards
         </Button>
       </Box>
+
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Save Flashcards</DialogTitle>
         <DialogContent>
@@ -211,7 +232,7 @@ export default function Generate() {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={saveFlashcards} disabled={!name}>
+          <Button onClick={saveFlashcards}>
             Save
           </Button>
         </DialogActions>
