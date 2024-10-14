@@ -24,7 +24,7 @@ export default function Flashcard() {
   useEffect(() => {
     async function getFlashcard() {
       if (!search || !user) return;
-      const colRef = collection(doc(db, "users", user.id), search); // Fixed
+      const colRef = collection(doc(db, "users", user.id), search); 
       const docs = await getDocs(colRef);
       const flashcards = [];
       docs.forEach((doc) => {
@@ -56,70 +56,70 @@ export default function Flashcard() {
               {flashcards.map((flashcard) => (
                 <Grid item xs={12} sm={6} md={4} key={flashcard.id}>
                   <Card>
-                    <CardActionArea onClick={() => handleCardClick(flashcard.id)}>
+                    <CardActionArea
+                      onClick={() => handleCardClick(flashcard.id)}
+                    >
                       <CardContent>
-                      <Box
-               sx={{
-    perspective: "1000px",
-    position: "relative",
-    width: "100%",
-    height: "200px",
-    "& > div": {
-      transition: "transform 0.6s",
-      transformStyle: "preserve-3d",
-      position: "relative",
-      width: "100%",
-      height: "100%",
-    },
-  }}
->
-  <div
-    style={{
-      transform: flipped[flashcard.id] ? "rotateY(180deg)" : "rotateY(0deg)",
-    }}
-  >
-   
-    <div
-      style={{
-        position: "absolute",
-        width: "100%",
-        height: "100%",
-        backfaceVisibility: "hidden",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        padding: 2,
-        boxSizing: "border-box",
-      }}
-    >
-      <Typography variant="h5" component="div">
-        {flashcard.front} 
-      </Typography>
-    </div>
+                        <Box
+                          sx={{
+                            perspective: "1000px",
+                            position: "relative",
+                            width: "100%",
+                            height: "200px",
+                            "& > div": {
+                              transition: "transform 0.6s",
+                              transformStyle: "preserve-3d",
+                              position: "relative",
+                              width: "100%",
+                              height: "100%",
+                            },
+                          }}
+                        >
+                          <div
+                            style={{
+                              transform: flipped[flashcard.id]
+                                ? "rotateY(180deg)"
+                                : "rotateY(0deg)",
+                            }}
+                          >
+                            <div
+                              style={{
+                                position: "absolute",
+                                width: "100%",
+                                height: "100%",
+                                backfaceVisibility: "hidden",
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                padding: 2,
+                                boxSizing: "border-box",
+                              }}
+                            >
+                              <Typography variant="h5" component="div">
+                                {flashcard.front}
+                              </Typography>
+                            </div>
 
-
-    <div
-      style={{
-        position: "absolute",
-        width: "100%",
-        height: "100%",
-        backfaceVisibility: "hidden",
-        transform: "rotateY(180deg)",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        padding: 2,
-        boxSizing: "border-box",
-      }}
-    >
-      <Typography variant="h5" component="div">
-        {flashcard.back} 
-      </Typography>
-    </div>
-  </div>
-</Box>
-
-
+                            <div
+                              style={{
+                                position: "absolute",
+                                width: "100%",
+                                height: "100%",
+                                backfaceVisibility: "hidden",
+                                transform: "rotateY(180deg)",
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                padding: 2,
+                                boxSizing: "border-box",
+                              }}
+                            >
+                              <Typography variant="h5" component="div">
+                                {flashcard.back}
+                              </Typography>
+                            </div>
+                          </div>
+                        </Box>
                       </CardContent>
                     </CardActionArea>
                   </Card>
@@ -128,7 +128,7 @@ export default function Flashcard() {
             </Grid>
           </div>
         ) : (
-          <Typography>No flashcards found.</Typography> 
+          <Typography>No flashcards found.</Typography>
         )}
       </Grid>
     </div>

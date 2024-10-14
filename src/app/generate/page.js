@@ -6,6 +6,7 @@ import { db } from "../../../firebase";
 import { writeBatch, doc, collection, getDoc } from "firebase/firestore";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import Navbar from "../../componetss/Navbar"
 import {
   Dialog,
   DialogTitle,
@@ -71,45 +72,42 @@ export default function Generate() {
   };
 
   const saveFlashcards = async () => {
-    if (!name) {
-      alert("Please Enter a Name");
+    /*if (!setName.trim()) {
+      alert('Please enter a name for your flashcard set.');
       return;
     }
+  */
     try {
-      const batch = writeBatch(db);
-      const userDocRef = doc(collection(db, "users"), user.id);
-      const docSnap = await getDoc(userDocRef);
-
-      if (docSnap.exists()) {
-        const collections = docSnap.data().flashcards || [];
-        if (collections.find((f) => f.name === name)) {
-          alert("Flashcards collection with the same name already exists");
-          return;
-        } else {
-          collections.push({ name });
-          batch.set(userDocRef, { flashcards: collections }, { merge: true });
-        }
+      const userDocRef = doc(collection(db, 'users'), user.id)
+      const userDocSnap = await getDoc(userDocRef)
+  
+      const batch = writeBatch(db)
+  
+      if (userDocSnap.exists()) {
+        const userData = userDocSnap.data()
+        const updatedSets = [...(userData.flashcardSets || []), { name: setName }]
+        batch.update(userDocRef, { flashcardSets: updatedSets })
       } else {
-        batch.set(userDocRef, { flashcards: [{ name }] });
+        batch.set(userDocRef, { flashcardSets: [{ name: setName }] })
       }
-
-      const colRef = collection(userDocRef, name);
-      flashcards.forEach((flashcard, index) => {
-        const cardDocRef = doc(colRef, `flashcard-${index}`);
-        batch.set(cardDocRef, flashcard);
-      });
-
-      await batch.commit();
-      handleClose();
-      router.push("/flashcards");
+  
+      const setDocRef = doc(collection(userDocRef, 'flashcardSets'), setName)
+      batch.set(setDocRef, { flashcards })
+  
+      await batch.commit()
+  
+      alert('Flashcards saved successfully!')
+      handleCloseDialog()
+      setName('')
     } catch (error) {
-      console.error("Error saving flashcards:", error);
-      alert("Failed to save flashcards");
+      console.error('Error saving flashcards:', error)
+      alert('An error occurred while saving flashcards. Please try again.')
     }
-  };
+  }
 
   return (
     <div className="bg-purple-400 min-h-screen">
+      <Navbar />
       <div className="flex flex-col items-center">
         <h1 className="mt-10 font-bold text-2xl">Generate Flashcards</h1>
         <div className="mt-4 grid w-96 gap-2">
@@ -124,7 +122,7 @@ export default function Generate() {
 
       {flashcards.length > 0 && (
         <Box sx={{ mt: 1}}>
-         
+       
           <div className="relative">
             <Carousel>
               <CarouselContent>
