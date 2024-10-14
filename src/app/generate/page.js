@@ -111,7 +111,7 @@ export default function Generate() {
   return (
     <div className="bg-purple-400 min-h-screen">
       <div className="flex flex-col items-center">
-        <h1 className="mt-10 text-white text-2xl">Generate Flashcards</h1>
+        <h1 className="mt-10 font-bold text-2xl">Generate Flashcards</h1>
         <div className="mt-4 grid w-96 gap-2">
           <Textarea
             placeholder="Enter Your Prompt here"
@@ -124,9 +124,7 @@ export default function Generate() {
 
       {flashcards.length > 0 && (
         <Box sx={{ mt: 1}}>
-          <Typography variant="h5" className="text-white">
-            Generated Flashcards
-          </Typography>
+         
           <div className="relative">
             <Carousel>
               <CarouselContent>
@@ -135,7 +133,7 @@ export default function Generate() {
                     <div
                       onClick={() => handleCardClick(index)}
                       style={{
-                        width: "200px",
+                        width: "300px",
                         height: "300px",
                         perspective: "1000px",
                         margin: "0 auto",
@@ -200,8 +198,7 @@ export default function Generate() {
                   </CarouselItem>
                 ))}
               </CarouselContent>
-              <CarouselPrevious>Previous</CarouselPrevious>
-              <CarouselNext>Next</CarouselNext>
+             
             </Carousel>
           </div>
         </Box>
